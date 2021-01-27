@@ -1,0 +1,49 @@
+<section class="cart">
+    <% if(session.cart) { %>
+    <div class="w-1/2 mx-auto">
+        <div class="order flex border-b border-gray-200 py-4">
+            <img src="img/cart-black.png" alt="empty cart">
+            <h1 class="ml-6 text-lg font-bold">Order summery</h1>
+        </div>
+        <div class="py-4">
+            <% for(let pizza of Object.values(session.cart.item)) { %>
+            <div class="flex items-center mb-4">
+                <img src="img/<%= pizza.item.image%>" class="w-24 mr-4" alt="ordered pizza">
+                <div class="flex-1">
+                    <h2 class="text-lg"><%= pizza.item.name%></h2>
+                    <span class="text-gray-400 text-sm uppercase"><%= pizza.item.size%></span>
+                </div>
+                <span class="flex-1 text-gray-500"><%= pizza.qty%></span>
+                <span class="flex-1 font-bold text-lg"><%= pizza.item.price * pizza.qty%></span>
+            </div>
+            <% } %>
+        </div>
+        <hr>
+        <div class="text-right w-1/2 mx-auto py-4">
+            <div>
+                <span class="text-lg font-bold">Totol Amount : </span>
+                <span class=" amount text-2xl font-bold"><%= session.cart.totalPrice%></span>
+            </div>
+            <div>
+                <form action="/orders" method="POST" class="my-4">
+                    <% if (messages.error) { %>
+                        <span class="text-red-500 my-4 text-sm"><%= messages.error%></span>
+                    <% } %>
+                    <input type="text" name="phone" class="w-full border border-gray-200 p-2 my-4" placeholder="Phone number">
+                    <input type="text" name="address" class="w-full border border-gray-200 p-2" placeholder="Address">
+                    <br><button type="submit" class="rounded-full py-2 px-4 my-4">Order Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <% } else { %>
+    <div class="container text-center">
+        <div class="cart my-8">
+            <h1 class="font-bold text-2xl my-2">Cart Empry</h1>
+            <h5 class="text-gray-400">You probably haven't ordered a pizza.to <br>order a pizza,go to the main page.</h5>
+            <img src="img/empty-cart.png" class="w-2/5 mx-auto my-16" alt="empty-cart">
+            <button class="py-2 px-6 my-8 rounded-full "><a href="" >Go Back</a></button>
+        </div>
+    </div>
+    <% } %>
+</section>

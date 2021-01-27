@@ -1,0 +1,23 @@
+<section class="login w-full flex items-center justify-center">
+    <div class="w-full max-w-xs">
+    
+        <form action="/login" method="POST" class="items-center bg-white shadow-md rounded px-8 py-6">
+            <% if (messages.error) { %>
+                <span class="text-red-500 my-4 text-sm"><%= messages.error%></span>
+            <% } %>
+            <div class="mb-4">
+                <label for="usernamme" class=" text-left block text-gray-700 text-sm font-bold">Email</label>
+                <input type="email" name="email" class="w-full p-2 shadow border rounded mt-4" placeholder="Enter your email">
+            </div>
+            <div class="mb-4">
+                <label for="pass" class=" text-left block text-gray-700 text-sm font-bold">Password</label>
+                <input type="password" name="password" class="w-full p-2 shadow border rounded mt-4" placeholder="Password">
+            </div>
+            <div class="mb-4 flex items-center justify-between">
+                <button type="submit" class="px-4 py-2 rounded-full">Login</button>
+                <a href="/register" class="log-in text-sm">Don't have account?</a>
+            </div>
+        </form>
+        <p class="text-center text-gray-500 text-xs p-1">&copy;2021 Rohit G. All rights reesrved.</p>
+    </div>
+</section>

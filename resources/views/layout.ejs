@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,100;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container mx-auto flex items-center justify-between py-4">
+        <div>
+            <img src="/img/logo.png" class="" alt="logo image">
+        </div>
+        <div>
+            <ul class="flex items-center">
+                <li class="ml-4"><a href="/">Home</a></li>
+                <% if(user) { %>
+                <li class="ml-4">
+                    <form action="/logout" method="POST" id="logout">
+                        <a onclick="document.getElementById('logout').submit()" href="#">Logout</a>
+                    </form>
+                </li>
+                <% } else { %>
+                <li class="ml-4"><a href="/register">Register</a></li>
+                <li class="ml-4"><a href="/login">Login</a></li>
+                <% } %>
+                <li class="ml-4 rounded-full py-2 px-4"><a href="/cart" class="flex items-center">
+                    <span id="cartCounter" class="font-bold text-white pr-2"><%= session.cart ? session.cart.totalQuantity: '' %></span>
+                    <img src="/img/cart.png" alt=""></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <%- body %>
+    <script src="/js/app.js"></script>
+   
+</body>
+</html>

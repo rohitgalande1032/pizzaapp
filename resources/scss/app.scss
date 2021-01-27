@@ -1,0 +1,70 @@
+@import '~noty/src/noty.scss';
+@import '~noty/src/themes/mint.scss';
+
+$primary : #FE5F1E;
+$primary-hover: #b23301;
+$secondary: #F8F8F8;
+$pure: #fff;
+$dark: #232323;
+$gray: #ccc;
+
+body {
+    font-family: "Lato" sans-serif;
+  }
+  
+  .container {
+    width: 80%;
+    margin: auto;
+  }
+  
+  ul li a:hover {
+    color: $primary;
+    transition: all 0.3s ease-in;
+  }
+  
+  ul li:last-child {
+    background-color: $primary;
+  }
+  
+  ul li:last-child:hover {
+    background-color: $primary-hover;
+    transition: all 0.3s ease-in;
+  }
+  
+  button {
+    background-color: $primary;
+    &:focus{
+      outline: none;
+    }
+    &:hover{
+      background-color: $primary-hover;
+      transition: all 0.3s ease-in;
+    }
+  }
+ 
+  .login,
+  .register,
+  .cart {
+    background-color: $secondary;
+    min-height: calc(100vh - 86px);
+  }
+  
+  .log-in {
+    color: $primary;
+  }
+  
+  .log-in:hover {
+    color: $primary-hover;
+    transition: all 0.3s ease-in;
+  }
+  
+  .noty_theme__mint {
+    border-radius: 50px!important;
+    padding-left: 8px!important;
+  }
+  a.link{
+    color: $primary;
+    &:hover{
+      color:$primary-hover;
+    }
+  }
