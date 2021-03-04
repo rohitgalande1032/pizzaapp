@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Noty from 'noty'
-import { initAdmin} from "./admin"
+import orderBodyTable from './admin'
+import moment from 'moment'
 
 let addToCart = document.querySelectorAll(".add-to-cart")
 let cartCounter = document.querySelector("#cartCounter")
@@ -39,7 +40,66 @@ if(alertMessage){
     },2000)
 }
 
-initAdmin()
+orderBodyTable()
 
+//make order status dynamic
 
+let statuses = document.querySelectorAll('.status-line')
+let hiddenInput = document.querySelector('#hiddenInput') 
+let order = hiddenInput ? hiddenInput.value : null
+order = JSON.parse(order)
+let time = document.createElement('small')
 
+function updateOrderStatus(order){
+    statuses.forEach(status=>{
+        status.classList.remove('step-completed')
+        status.classList.remove('current')
+    })
+      
+
+    let stepCompleted = true;
+    statuses.forEach((status)=>{
+        let dataProperty = status.dataset.status
+        if (stepCompleted){
+            status.classList.add('step-completed')
+        }
+        
+        if(dataProperty === order.status){
+            stepCompleted = false;
+            time.innerText = moment(order.updatedAt).format('hh:mm A')
+            status.appendChild(time)
+            
+            if(status.nextElementSibling){
+                 status.nextElementSibling.classList.add('current')
+                
+            }
+        }
+    })
+}
+
+updateOrderStatus(order)
+
+const socket = io()
+if(order){
+    socket.emit('join',`order_${order._id}`)
+}
+
+const adminPath = window.location.pathname
+console.log(adminPath)
+
+if(adminPath.includes('admin')){
+    socket.emit('join', 'adminRoom')
+}
+
+socket.on('orderUpdated', (data) => {
+    const updatedOrder = { ...order }
+    updatedOrder.updatedAt = moment().format()
+    updatedOrder.status = data.status
+    updateOrderStatus(updatedOrder)
+    new Noty({
+        type:'success',
+        timeout: 1000,
+        text: 'Order Updated.',
+        progressBar: false,
+    }).show();
+})

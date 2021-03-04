@@ -11,18 +11,22 @@ const mongoDbstore = require("connect-mongo")(session)
 const flash = require("express-flash")
 const passport = require('passport')
 const bodyParser = require('body-parser')
+const Emitter = require('events')
 
-const url = "mongodb://localhost:27017/menu"
+const url = "mongodb://localhost/menu"
 
 mongoose.connect(url, {
-    useCreateIndex:true, useFindAndModify:true,useCreateIndex:true,useNewUrlParser:true,useUnifiedTopology: true 
+    useCreateIndex:true,
+    useUnifiedTopology:true,
+    useCreateIndex:true,
+    useNewUrlParser:true 
 })
 
 const connection = mongoose.connection
 connection.once('open', ()=>{
     console.log("Database connected!")
 }).catch(err=>{
-    console.log("Error occured")
+    console.log(err)
 })
 
 //session store
@@ -32,6 +36,11 @@ let mongoStore = new mongoDbstore ({
 })
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
+
+// Emit event
+const eventEmitter = new Emitter()
+app.set('eventEmitter',eventEmitter)
+
 //session
 app.use(session({
     secret: process.env.COOKIE_SECRET,
@@ -69,10 +78,27 @@ require("./routes/web")(app)
 
 app.get("/api", (req,res)=>{
     res.json({
-        "message":"Hiii from rohit to the vaishnavi",
-        "oopinion":"i love u so much vaishnavi"
+        "message":"Hiii from rohit to the ,,..//"
+    })
+})
+const server = app.listen(3000,()=>{
+                console.log("server created successfully")
+            })
+
+//socket.io 
+const io = require("socket.io")(server)
+io.on("connection", (socket)=>{
+    socket.on('join', (roomName)=>{
+        console.log(roomName)
+        socket.join(roomName)
+        
     })
 })
 
-app.listen(3000,()=>{
-    console.log("se
+eventEmitter.on('orderUpdated', (data) => {
+    io.to(`order_${data._id}`).emit('orderUpdated', data)
+})
+
+eventEmitter.on('orderPlaced',(data)=>{
+    io.to('adminRoom').emit('orderPlaced',data)
+})

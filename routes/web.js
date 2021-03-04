@@ -1,13 +1,14 @@
 const authcontroller = require("../app/http/controllers/authcontroller")
 const homeController = require("../app/http/controllers/homeController")
 const cartPage = require("../app/http/controllers/custemer/cartController")
-const orderConteroller = require("../app/http/controllers/orderController")
+const orderController = require("../app/http/controllers/orderController")
+const adminOrderController = require("../app/http/controllers/admin/orderController")
+const statusOrderController = require("../app/http/controllers/admin/statusController")
 
+//middlewares
 const guest = require("../app/http/middlewares/guest")
 const auth = require("../app/http/middlewares/auth")
-
-const adminOrderConteroller = require("../app/http/controllers/admin/orderController")
-
+const admin = require('../app/http/middlewares/admins')
 
 function initRoutes(app){
     app.get("/",homeController().index)
@@ -27,13 +28,15 @@ function initRoutes(app){
     app.post("/logout",authcontroller().logout)
 
     // order store
-    app.post("/orders",auth,orderConteroller().orders)
+    app.post("/orders",auth,orderController().orders)
 
-    app.get("/buyers/orders",auth,orderConteroller().index)    
+    app.get("/buyers/orders",auth,orderController().index)    
 
+    app.get("/admin/orders",admin,adminOrderController().index)
     
-    app.get("/admin/orders",adminOrderConteroller().index)
-    
+    app.post("/admin/orders/status",statusOrderController().update)
+
+    app.get("/customer/orders/:id",auth,orderController().showStatus)     
 }
 
 module.exports = initRoutes;
