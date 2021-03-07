@@ -13,9 +13,7 @@ const passport = require('passport')
 const bodyParser = require('body-parser')
 const Emitter = require('events')
 
-const url = "mongodb://localhost/menu"
-
-mongoose.connect(url, {
+mongoose.connect(process.env.MONGO_URL, {
     useCreateIndex:true,
     useUnifiedTopology:true,
     useCreateIndex:true,
@@ -34,8 +32,9 @@ let mongoStore = new mongoDbstore ({
     mongooseConnection: connection,
     collection: 'sessions'
 })
+
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:false}))
 
 // Emit event
 const eventEmitter = new Emitter()
@@ -75,12 +74,10 @@ app.use((req,res,next) =>{
 
 
 require("./routes/web")(app)
-
-app.get("/api", (req,res)=>{
-    res.json({
-        "message":"Hiii from rohit to the ,,..//"
-    })
+app.use((req,res)=>{
+    res.status(404).send("<h1>404 error, Page not Found.</h1>")
 })
+
 const server = app.listen(3000,()=>{
                 console.log("server created successfully")
             })
@@ -89,9 +86,8 @@ const server = app.listen(3000,()=>{
 const io = require("socket.io")(server)
 io.on("connection", (socket)=>{
     socket.on('join', (roomName)=>{
-        console.log(roomName)
-        socket.join(roomName)
-        
+        // console.log(roomName)
+        // socket.join(roomName)
     })
 })
 

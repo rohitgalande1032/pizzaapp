@@ -1,9 +1,6 @@
-
 const User = require("../../models/user")
 const bcrypt  = require('bcrypt')
 const passport= require("passport")
-
-
 
 function authcontroller(){
     return{
@@ -12,6 +9,12 @@ function authcontroller(){
         },
 
         postLogin(req,res){
+            const {email,password} = req.body
+            if(!email || !password){
+                req.flash('error','All fields are required')
+                req.flash('email', email)
+                return res.redirect('/login')
+            }
             passport.authenticate('local',(err,user,info)=>{
                 if(err) {
                     req.flash('error',info.message)
@@ -73,9 +76,7 @@ function authcontroller(){
             }).catch(err=>{
                 req.flash('error', 'Something went wrong')
                 return res.redirect('/register')
-            })
-            console.log(user)
-            
+            })            
         },
         logout(req,res) {
             req.logout()

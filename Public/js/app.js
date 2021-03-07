@@ -26908,9 +26908,18 @@ function orderBodyTable() {
     console.log(err);
   });
 
+  function renderItems(items) {
+    var itemsParsed = Object.values(items); // console.log(itemsParsed)
+
+    return itemsParsed.map(function (menuItems) {
+      console.log(menuItems.item);
+      return "\n            <p>".concat(menuItems.item.name, " - ").concat(menuItems.qty, " pcs</p>\n            ");
+    }).join('');
+  }
+
   function generateMarkup(orders) {
     return orders.map(function (order) {
-      return "\n                <tr>\n                <td class=\"border px-4 py-2 text-green-900\">\n                    <P>".concat(order._id, "</P>\n                    <div></div>\n                </td>\n                <td class=\"border px-4 py-2\">").concat(order.customerId.name, "</td>\n                <td class=\"border px-4 py-2\">").concat(order.address, "</td>\n                <td class=\"border px-4 py-2\">").concat(order.phone, "</td>\n                <td class=\"border px-4 py-2\">\n                    <div class=\"inline-block relative w-64\">\n                        <form action=\"/admin/orders/status\" method=\"POST\">\n                            <input type='hidden' name=\"orderId\" value=").concat(order._id, ">\n                            <select name=\"status\" type=\"checkbox\" onchange='this.form.submit()'\n                            class=\"form-select block appearance-none w-full bg-white border border-gray-400 hover:border-gray-600\n                            px-4 py-2 pr-8 rounded shadow focus:outline-none\">\n                            <option value=\"order_placed\"\n                            ").concat(order.status === 'order_placed' ? 'selected' : '', ">\n                            Order_placed</option>\n\n                            <option value=\"confirmed\"\n                            ").concat(order.status === 'confirmed' ? 'selected' : '', ">\n                            Confirmed</option>\n\n                            <option value=\"prepared\"\n                            ").concat(order.status === 'prepared' ? 'selected' : '', ">\n                            Prepared</option>\n                            \n\n                            <option value=\"delivered\"\n                            ").concat(order.status === 'delivered' ? 'selected' : '', ">\n                            Delivered</option>\n\n                            <option value=\"completed\"\n                            ").concat(order.status === 'completed' ? 'selected' : '', ">\n                            Completed</option>\n\n                            </select>  \n                        \n                        </form>    \n                        <div class=\"pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700\">\n                            <svg class=\"fill-current h-4 w-4\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 20 20\"><path d=\"M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z\"/></svg>\n                        </div>                \n                    </div>\n                </td>\n                <td class=\"border px-4 py-2\">\n                    ").concat(moment__WEBPACK_IMPORTED_MODULE_1___default()(order.createdAt).format('hh:mm A'), "\n                </td>    \n                </tr> \n            ");
+      return "\n                <tr>\n                <td class=\"border px-4 py-2 text-green-900\">\n                    <P>".concat(order._id, "</P>\n                    <div>").concat(renderItems(order.items.item), "</div>\n                </td>\n                <td class=\"border px-4 py-2\">").concat(order.customerId.name, "</td>\n                <td class=\"border px-4 py-2\">").concat(order.address, "</td>\n                <td class=\"border px-4 py-2\">").concat(order.phone, "</td>\n                <td class=\"border px-4 py-2\">\n                    <div class=\"inline-block relative w-64\">\n                        <form action=\"/admin/orders/status\" method=\"POST\">\n                            <input type='hidden' name=\"orderId\" value=").concat(order._id, ">\n                            <select name=\"status\" type=\"checkbox\" onchange='this.form.submit()'\n                            class=\"form-select block appearance-none w-full bg-white border border-gray-400 hover:border-gray-600\n                            px-4 py-2 pr-8 rounded shadow focus:outline-none\">\n                            <option value=\"order_placed\"\n                            ").concat(order.status === 'order_placed' ? 'selected' : '', ">\n                            Order_placed</option>\n\n                            <option value=\"confirmed\"\n                            ").concat(order.status === 'confirmed' ? 'selected' : '', ">\n                            Confirmed</option>\n\n                            <option value=\"prepared\"\n                            ").concat(order.status === 'prepared' ? 'selected' : '', ">\n                            Prepared</option>\n                            \n\n                            <option value=\"delivered\"\n                            ").concat(order.status === 'delivered' ? 'selected' : '', ">\n                            Delivered</option>\n\n                            <option value=\"completed\"\n                            ").concat(order.status === 'completed' ? 'selected' : '', ">\n                            Completed</option>\n\n                            </select>  \n                        \n                        </form>    \n                        <div class=\"pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700\">\n                            <svg class=\"fill-current h-4 w-4\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 20 20\"><path d=\"M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z\"/></svg>\n                        </div>                \n                    </div>\n                </td>\n                <td class=\"border px-4 py-2\">\n                    ").concat(moment__WEBPACK_IMPORTED_MODULE_1___default()(order.createdAt).format('hh:mm A'), "\n                </td>    \n                </tr> \n            ");
     }).join('');
   }
 
@@ -26963,7 +26972,6 @@ var cartCounter = document.querySelector("#cartCounter");
 
 function updateCart(pizza) {
   axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/update-cart', pizza).then(function (res) {
-    console.log(res);
     cartCounter.innerText = res.data.totalQuantity;
     new noty__WEBPACK_IMPORTED_MODULE_1___default.a({
       type: 'success',
@@ -26993,9 +27001,8 @@ if (alertMessage) {
   setTimeout(function () {
     alertMessage.remove();
   }, 2000);
-}
+} //make order status dynamic
 
-Object(_admin__WEBPACK_IMPORTED_MODULE_2__["default"])(); //make order status dynamic
 
 var statuses = document.querySelectorAll('.status-line');
 var hiddenInput = document.querySelector('#hiddenInput');
@@ -27036,10 +27043,10 @@ if (order) {
 }
 
 var adminPath = window.location.pathname;
-console.log(adminPath);
 
 if (adminPath.includes('admin')) {
   socket.emit('join', 'adminRoom');
+  Object(_admin__WEBPACK_IMPORTED_MODULE_2__["default"])();
 }
 
 socket.on('orderUpdated', function (data) {

@@ -34,7 +34,6 @@ function cartPage(){
     }
 }
 
-
 module.exports = cartPage
 
 

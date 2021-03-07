@@ -1,18 +1,18 @@
-<section class="status">
+<section class="status background">
     <div class="container mx-auto pt-8">
-        <div class="w-2/3 mx-auto">
+        <div class="w-full md:w-2/3 mx-auto">
             <div class="mb-12 flex items-center justify-between">
-                <p class="text-xl">Track Delivery Status</p>
+                <p class="text-sm md:text-xl">Track Delivery Status</p>
                 <h1 class="text-green-600 text-xs bg-white py-1 px-4 rounded-full"><%=order._id%></h1>
                 <input type="hidden" id="hiddenInput" value="<%= JSON.stringify(order)%>">
             </div>
             <div class="status-box">
                 <ul>
-                    <li class="status-line text-bold text-lg pb-16" data-status='order_placed'><span>Order_placed</span></li>
-                    <li class="status-line text-bold text-lg pb-16" data-status='confirmed'><span>Confirmed</span></li>
-                    <li class="status-line text-bold text-lg pb-16" data-status='prepared'><span>Prepared</span></li>
-                    <li class="status-line text-bold text-lg pb-16" data-status='delivered'><span>Out_for_Delivery</span></li>
-                    <li class="status-line text-bold text-lg" data-status='completed'><span>Completed</span></li>
+                    <li class="status-line text-bold text-sm md:text-lg pb-16" data-status='order_placed'><span>Order_placed</span></li>
+                    <li class="status-line text-bold text-sm md:text-lg pb-16" data-status='confirmed'><span>Confirmed</span></li>
+                    <li class="status-line text-bold text-sm md:text-lg pb-16" data-status='prepared'><span>Prepared</span></li>
+                    <li class="status-line text-bold text-sm md:text-lg pb-16" data-status='delivered'><span>Out_for_Delivery</span></li>
+                    <li class="status-line text-bold text-sm md:text-lg" data-status='completed'><span>Completed</span></li>
                 </ul>
             </div>
             

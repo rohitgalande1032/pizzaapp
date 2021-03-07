@@ -17,16 +17,26 @@ function orderBodyTable() {
     }).catch(err=>{
         console.log(err)
     })
+  
+    function renderItems(items){
+        let itemsParsed = Object.values(items)
+        // console.log(itemsParsed)
+        return itemsParsed.map(menuItems => {
+            console.log((menuItems.item))    
                   
-   
-
+            return`
+            <p>${menuItems.item.name} - ${menuItems.qty} pcs</p>
+            `
+        }).join('')
+    }
+    
     function generateMarkup(orders){
         return orders.map(order => {
             return `
                 <tr>
                 <td class="border px-4 py-2 text-green-900">
                     <P>${order._id}</P>
-                    <div></div>
+                    <div>${renderItems(order.items.item)}</div>
                 </td>
                 <td class="border px-4 py-2">${ order.customerId.name }</td>
                 <td class="border px-4 py-2">${order.address}</td>
@@ -71,7 +81,7 @@ function orderBodyTable() {
                     ${moment(order.createdAt).format('hh:mm A')}
                 </td>    
                 </tr> 
-            `
+            `     
         }).join('')
     }
 

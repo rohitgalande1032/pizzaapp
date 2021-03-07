@@ -309,6 +309,10 @@ body {
   font-family: "Lato" sans-serif;
 }
 
+.background {
+  background-color: #F8F8F8;
+}
+
 .container {
   width: 80%;
   margin: auto;
@@ -480,5 +484,19 @@ a.link:hover {
   color: #232323;
   margin-top: 8px;
   font-size: 14px;
+}
+
+@media (max-width: 1024px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .status-box ul li span:before {
+    font-family: "Line Awesome Free";
+    font-weight: 600;
+    font-size: 35px;
+  }
 }
 

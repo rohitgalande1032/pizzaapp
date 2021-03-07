@@ -8,7 +8,6 @@ let cartCounter = document.querySelector("#cartCounter")
 
 function updateCart(pizza){
     axios.post('/update-cart', pizza).then(res=>{
-        console.log(res)
         cartCounter.innerText = res.data.totalQuantity
         new Noty({
             type:'success',
@@ -40,7 +39,6 @@ if(alertMessage){
     },2000)
 }
 
-orderBodyTable()
 
 //make order status dynamic
 
@@ -56,7 +54,6 @@ function updateOrderStatus(order){
         status.classList.remove('current')
     })
       
-
     let stepCompleted = true;
     statuses.forEach((status)=>{
         let dataProperty = status.dataset.status
@@ -85,10 +82,11 @@ if(order){
 }
 
 const adminPath = window.location.pathname
-console.log(adminPath)
 
 if(adminPath.includes('admin')){
     socket.emit('join', 'adminRoom')
+    
+    orderBodyTable()
 }
 
 socket.on('orderUpdated', (data) => {
