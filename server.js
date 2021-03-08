@@ -10,10 +10,10 @@ const { config } = require("dotenv")
 const mongoDbstore = require("connect-mongo")(session)
 const flash = require("express-flash")
 const passport = require('passport')
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser')  
 const Emitter = require('events')
-
-mongoose.connect(process.env.MONGO_URL, {
+ const PORT = process.env.PORT || 3000;
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/menu', {
     useCreateIndex:true,
     useUnifiedTopology:true,
     useCreateIndex:true,
@@ -78,8 +78,8 @@ app.use((req,res)=>{
     res.status(404).send("<h1>404 error, Page not Found.</h1>")
 })
 
-const server = app.listen(3000,()=>{
-                console.log("server created successfully")
+const server = app.listen(PORT,()=>{
+                console.log(`server created successfully at port ${PORT}`)
             })
 
 //socket.io 
