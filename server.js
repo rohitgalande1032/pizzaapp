@@ -13,7 +13,8 @@ const passport = require('passport')
 const bodyParser = require('body-parser')  
 const Emitter = require('events')
  const PORT = process.env.PORT || 3000;
-mongoose.connect('mongodb+srv://rohit:19131032@cluster0.2vcrr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+ const uri = "mongodb+srv://rohit:19131032@cluster0.2vcrr.mongodb.net/menu?retryWrites=true&w=majority";
+mongoose.connect(uri, {
     useCreateIndex:true,
     useUnifiedTopology:true,
     useCreateIndex:true,
