@@ -13,24 +13,37 @@ const passport = require('passport')
 const bodyParser = require('body-parser')  
 const Emitter = require('events')
  const PORT = process.env.PORT || 3000;
- const uri = process.env.MONGODB_URL || 'mongodb://localhost/menu';
-mongoose.connect(uri, {
-    useCreateIndex:true,
-    useUnifiedTopology:true,
-    useCreateIndex:true,
-    useNewUrlParser:true 
-})
+// const uri = process.env.MONGODB_URL;
+// mongoose.connect(uri, {
+//     useCreateIndex:true,
+//     useUnifiedTopology:true,
+//     useCreateIndex:true,
+//     useNewUrlParser:true 
+// })
 
-const connection = mongoose.connection
-connection.once('open', ()=>{
-    console.log("Database connected!")
-}).catch(err=>{
-    console.log(err)
-})
 
+// const connection = mongoose.connection
+// connection.once('open', ()=>{
+//     console.log("Database connected!")
+// }).catch(err=>{
+//     console.log(err)
+// })
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = process.env.MONGO_URI || 'mongodb://localhost:menu';
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  if(err=>{
+      throw err
+  })
+  console.log('connected')
+  // perform actions on the collection object
+  client.close("");
+});
 //session store
 let mongoStore = new mongoDbstore ({
-    mongooseConnection: connection,
+    mongooseConnection: client,
     collection: 'sessions'
 })
 
