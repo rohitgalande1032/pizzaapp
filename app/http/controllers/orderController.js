@@ -49,7 +49,7 @@ function orderController(){
             if(req.user._id.toString() === order.customerId.toString()){
                 return res.render('buyers/status',{order})
             }
-            return res.redirect('/')
+            return res.redirect('/') .catch(error => { throw error})
         }
     }
 }
