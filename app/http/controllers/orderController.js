@@ -41,7 +41,7 @@ function orderController(){
         },
         async index(req,res){
             const orders = await Order.find({customerId : req.user._id},null,{sort:{'createdAt':-1}})
-            res.render('buyers/order',{orders:orders,moment:moment})
+            res.render('buyers/order',{orders:orders,moment:moment}).catch(error => { throw error})
         },
         async showStatus(req,res){
             const order =await Order.findById(req.params.id)

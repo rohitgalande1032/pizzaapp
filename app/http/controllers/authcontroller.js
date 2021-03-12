@@ -39,7 +39,7 @@ function authcontroller(){
             res.render("auth/register")
         },
 
-       async  postRegister(req,res){
+       async postRegister(req,res){
             const {name,email,password} = req.body
             if(!name || !email || !password){
                 req.flash('error','All fields are required')
@@ -68,7 +68,7 @@ function authcontroller(){
                 name: name,
                 email:email,
                 password: hashedPassword
-            })
+            }).catch(error => { throw error})
            
             user.save().then(user =>{
                 //Login
