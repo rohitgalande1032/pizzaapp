@@ -28,7 +28,7 @@ const Emitter = require('events')
 // }).catch(err=>{
 //     console.log(err)
 // })
-
+const connection = mongoose.connection
 const MongoClient = require('mongodb').MongoClient;
 const uri = process.env.MONGO_URI || 'mongodb://localhost:menu';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -41,9 +41,10 @@ client.connect(err => {
   // perform actions on the collection object
   client.close("");
 });
+
 //session store
 let mongoStore = new mongoDbstore ({
-    mongooseConnection: client,
+    mongooseConnection: connection,
     collection: 'sessions'
 })
 
