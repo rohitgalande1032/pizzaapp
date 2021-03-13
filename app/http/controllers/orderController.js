@@ -30,9 +30,7 @@ function orderController(){
 
                 return res.redirect('/buyers/orders')
                 })
-                if(err){
-                    console.log(err)
-                }
+                
                 
             }).catch(err=>{
                 req.flash('error','Something went wrong')
@@ -41,7 +39,7 @@ function orderController(){
         },
         async index(req,res){
             const orders = await Order.find({customerId : req.user._id},null,{sort:{'createdAt':-1}})
-            res.render('buyers/order',{orders:orders,moment:moment}).catch(error => { throw error})
+            res.render('buyers/order',{orders:orders,moment:moment})
         },
         async showStatus(req,res){
             const order =await Order.findById(req.params.id)
@@ -49,7 +47,7 @@ function orderController(){
             if(req.user._id.toString() === order.customerId.toString()){
                 return res.render('buyers/status',{order})
             }
-            return res.redirect('/') .catch(error => { throw error})
+            return res.redirect('/')
         }
     }
 }

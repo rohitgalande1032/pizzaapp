@@ -68,7 +68,7 @@ function authcontroller(){
                 name: name,
                 email:email,
                 password: hashedPassword
-            }).catch(error => { throw error})
+            })
            
             user.save().then(user =>{
                 //Login

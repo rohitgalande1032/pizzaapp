@@ -28,19 +28,16 @@ const Emitter = require('events')
 // }).catch(err=>{
 //     console.log(err)
 // })
+const url = process.env.MONGO_URI || 'mongodb://localhost:menu';
 const connection = mongoose.connection
-const MongoClient = require('mongodb').MongoClient;
-const uri = process.env.MONGO_URI || 'mongodb://localhost:menu';
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  if(err=>{
-      throw err
-  })
-  console.log('connected')
-  // perform actions on the collection object
-  client.close("");
-});
+
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+.then(()=>{
+    console.log("Database Connected")
+}).catch(err=>{
+    console.log(err)
+})
+
 
 //session store
 let mongoStore = new mongoDbstore ({
