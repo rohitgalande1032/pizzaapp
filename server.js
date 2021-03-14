@@ -12,16 +12,12 @@ const flash = require("express-flash")
 const passport = require('passport')
 const bodyParser = require('body-parser')  
 const Emitter = require('events')
- const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 const url = process.env.MONGO_URI || 'mongodb://localhost:menu';
 const connection = mongoose.connection
 
 app.use(express.static("public"))
-app.use('/css',express.static(__dirname + "public/css"))
-app.use('/js',express.static(__dirname + "public/js"))
-app.use('/img',express.static(__dirname + "public/img"))
-
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 .then(()=>{
