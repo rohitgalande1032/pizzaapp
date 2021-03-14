@@ -13,23 +13,11 @@ const passport = require('passport')
 const bodyParser = require('body-parser')  
 const Emitter = require('events')
  const PORT = process.env.PORT || 3000;
-// const uri = process.env.MONGODB_URL;
-// mongoose.connect(uri, {
-//     useCreateIndex:true,
-//     useUnifiedTopology:true,
-//     useCreateIndex:true,
-//     useNewUrlParser:true 
-// })
 
-
-// const connection = mongoose.connection
-// connection.once('open', ()=>{
-//     console.log("Database connected!")
-// }).catch(err=>{
-//     console.log(err)
-// })
 const url = process.env.MONGO_URI || 'mongodb://localhost:menu';
 const connection = mongoose.connection
+
+app.use(express.static("public"))
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 .then(()=>{
@@ -73,7 +61,6 @@ app.use(ejsLayouts)
 app.set("views",path.join(__dirname,'./resources/views'))
 app.set("view engine", "ejs")
 
-app.use(express.static("public"))
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
