@@ -2,13 +2,13 @@
     <% if(session.cart) { %>
     <div class="w-1/2 mx-auto">
         <div class="order flex border-b border-gray-200 py-4">
-            <img src="img/cart-black.png" alt="empty cart">
+            <img src="/img/cart-black.png" alt="empty cart">
             <h1 class="ml-6 text-lg font-bold">Order summery</h1>
         </div>
         <div class="py-4">
             <% for(let pizza of Object.values(session.cart.item)) { %>
             <div class="flex items-center mb-4">
-                <img src="img/<%= pizza.item.image%>" class="w-24 mr-4" alt="ordered pizza">
+                <img src="/img/<%= pizza.item.image%>" class="w-24 mr-4" alt="ordered pizza">
                 <div class="flex-1">
                     <h2 class="text-lg"><%= pizza.item.name%></h2>
                     <span class="text-gray-400 text-sm uppercase"><%= pizza.item.size%></span>
