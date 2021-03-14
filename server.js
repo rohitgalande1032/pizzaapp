@@ -18,6 +18,14 @@ const url = process.env.MONGO_URI || 'mongodb://localhost:menu';
 const connection = mongoose.connection
 
 app.use(express.static(__dirname + '/public'));
+app.use("/css", express.static(__dirname + '/css'));
+app.use("/img", express.static(__dirname + '/img'));
+app.use("/js", express.static(__dirname + '/js'));
+
+app.use(ejsLayouts)
+app.set("views",path.join(__dirname,'./resources/views'))
+app.set("view engine", "ejs")
+
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 .then(()=>{
@@ -56,10 +64,6 @@ app.use(passport.session())
 
 //express flash
 app.use(flash())
-
-app.use(ejsLayouts)
-app.set("views",path.join(__dirname,'./resources/views'))
-app.set("view engine", "ejs")
 
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
