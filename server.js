@@ -19,6 +19,9 @@ const connection = mongoose.connection
 
 process.env.PWD = process.cwd()
 app.use(express.static(path.join(process.env.PWD,'public')));
+app.use(express.static('public/images'))
+app.use(express.static('public/js'))
+app.use(express.static('public/css'))
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 .then(()=>{
