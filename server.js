@@ -17,7 +17,8 @@ const PORT = process.env.PORT || 3000;
 const url = process.env.MONGO_URI || 'mongodb://localhost:menu';
 const connection = mongoose.connection
 
-app.use(express.static(path.join(__dirname+'/public')));
+process.env.PWD = process.cwd()
+app.use(express.static(path.join(process.env.PWD,'public')));
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 .then(()=>{
