@@ -1,5 +1,5 @@
 # pizzaapp
-Online pizza delivery app
+Online pizza delivery app, I spend full time 3 months to complete project. It was great experience and learned to develop full stack applications. After this project I am expert in HTML, CSS, Javascript, Express.js, MongoDB, and other frameworks.
 
 # Prerequisites
 This is an example of how to list things you need to use the app and how to install them.
